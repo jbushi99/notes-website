@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html style="height:100%;">
+    <head>
+       <meta charset="utf-8" />
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link rel="stylesheet" href="{{ url_for('static',filename='styles/base.css') }}" type="text/css" />
+       <title>{% block title %}Home{% endblock %}</title> 
+    </head>
+    <body style="background-color:rgba(23, 1, 24, 0.9); margin:0; padding:0; height:auto; min-height:550px;">
+        {% if user.user_isAuthenticated %}
+        <div id="nav-bar-div" >
+            <div id="nav-start-div">
+                <a id="home-link" href="/" >Home</a>
+                <a id="inbox-link" href="/inbox">Inbox</a>
+            </div>
+
+            <div id="nav-middle-div" >
+                <input id="search-users" placeholder="Find user. . ." />
+                <button id="search-users-button" onClick="var userinput = document.getElementById('search-users').value;
+                searchUser(userinput);" >SEARCH</button>
+            </div>
+
+            <div id="nav-end-div" >
+                <p id="logged-in-p"><i>Logged in as: {{user.user_username}}</i></p>
+                <a id="logout-link" href="/logout">Logout</a>
+            </div>
+
+        </div>
+        {% else %}
+            <div id="nav-bar-div" style="margin:0 20% 0 20%;">
+                <div id="nav-start-div">
+                    <a id="home-link" href="/login">Login</a>
+                    <a id="inbox-link" href="/sign-up">Sign Up</a>
+                </div>
+
+                <div id="nav-middle-div"></div>
+                
+                <div id="nav-end-div"></div>
+            </div>
+        {% endif %}
+        <div class="container">
+            {% block content%}
+            {% endblock %}
+        </div>
+        
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', filename='index.js') }}">
+        </script>
+    </body>
+</html>

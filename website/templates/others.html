@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block title %}{{otheruser.user_username}}'s notes{% endblock %}
+{% block content%}
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/styles/others.css"/> 
+</head>
+
+<h1 align="center" id="title-h1">Notes of {{otheruser.user_username}}</h1>
+
+<div id="page-content-div">
+    <div id="commands-side-div">
+        <button type="button" id="followbutton" onClick="changeFollowStatus('{{otheruser.user_id}}', '{{otheruser.user_username}}', '{{followButtonText}}')">{{followButtonText}}</button>
+        <form id="send-message-form" method="POST">
+            <textarea name="message" id="send-message-textarea" placeholder="Send a message. . ."></textarea>
+            <button type="submit" id="send-message-button">SEND MESSAGE</button>
+        </form>
+    </div>
+
+    <div id="notes-side-div">
+        <ul id="group-list">
+            {% for note in otheruser.user_notes %}
+            {% if note.note_visibility == 2 or (note.note_visibility == 1 and is_following) %}
+            <li id="group-item-list">
+                <div id="a-note-div">
+                    <div id="note-text-div">
+                        <p id="note-text-p"> {{ note.note_text }} </p>
+                        <div id="note-info-div">
+                            <p id='posted-at-p'><b>Posted at</b>:
+                                {{note.note_date }}</p>
+                            <p id='visibility-p'><b>Visibility</b>:
+                                {{['private','followers','public'].pop(note.note_visibility) }} </p>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+     
+</div>
+
+{% endblock %}

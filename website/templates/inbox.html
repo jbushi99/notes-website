@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block title %}Inbox{% endblock %}
+{% block content%}
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/styles/inbox.css"/> 
+</head>
+
+<h1 align="center" id="title-h1">My Inbox</h1>
+
+<div id="received-messages-div">
+    {% for message in user.user_messages %}
+    <ul id="group-list">
+        <li id="group-item-list">
+            <div id="a-message-div">
+                <div id="message-commands-group-div">
+                    <button type="button" id="delete-button" onClick="deleteMessage('{{ message.message_id }}')">
+                        DELETE
+                    </button>
+                </div>
+                <div id="message-text-div">
+                    <p id="message-text-p"> {{ message.message_text }} </p>
+                    <div id='message-info-div'>
+                        <p id='posted-at-p'> <b>Received at</b>: {{message.message_date }}</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    {% endfor %}
+</div>
+
+{% endblock %}
